@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import {
   Play,
   ArrowRight,
@@ -10,7 +10,6 @@ import {
   MonitorPlay,
   TrendingUp,
   Sparkles,
-  Smartphone,
   ArrowDown,
 } from 'lucide-react';
 
@@ -49,83 +48,70 @@ const videos = [
   },
 ];
 
-const services = [
-  {
-    icon: <MonitorPlay className="w-8 h-8 mb-6 text-white/70" />,
-    id: '01',
-    title: 'AI Video Solutions',
-    subtitle: 'Sản xuất nhanh - Sửa lỗi dễ dàng - Chi phí tối ưu',
-    features: [
-      {
-        name: 'Sản xuất Video AI trọn gói',
-        desc: 'Chất lượng Cinematic chỉ trong 24-48h.',
-      },
-      {
-        name: 'AI Video Fix & Optimization',
-        desc: 'Sửa voice, sai màu, thay thông tin trực tiếp trên file gốc không cần quay lại.',
-      },
-      {
-        name: 'AI Video Recovery',
-        desc: 'Hồi sinh video cũ, lỗi thành siêu phẩm.',
-      },
-    ],
-    highlight: true,
-  },
-  {
-    icon: <TrendingUp className="w-8 h-8 mb-6 text-white/70" />,
-    id: '02',
-    title: 'Growth Marketing',
-    subtitle: 'Chiến lược tăng trưởng dựa trên dữ liệu & AI',
-    features: [
-      {
-        name: 'AI-Powered Performance',
-        desc: 'Sản xuất hàng loạt video ngắn (Massive Production) để chạy A/B Testing liên tục.',
-      },
-      {
-        name: 'Omnichannel Strategy',
-        desc: 'Xây dựng phễu bán hàng đa kênh, tối ưu ROI thực tế.',
-      },
-    ],
-    highlight: false,
-  },
-  {
-    icon: <Sparkles className="w-8 h-8 mb-6 text-white/70" />,
-    id: '03',
-    title: 'Branding Agency',
-    subtitle: 'Xây dựng vị thế dẫn đầu cho cá nhân & tổ chức',
-    features: [
-      {
-        name: 'AI Spokesperson & Avatar',
-        desc: 'Đại diện số hiện diện 24/7 không cần ở studio.',
-      },
-      {
-        name: 'Cinematic Storytelling',
-        desc: 'Kể câu chuyện thương hiệu bằng video AI điện ảnh, sang trọng.',
-      },
-    ],
-    highlight: false,
-  },
-  {
-    icon: <Smartphone className="w-8 h-8 mb-6 text-white/70" />,
-    id: '04',
-    title: 'Social Management',
-    subtitle: 'Phủ sóng với hàng trăm Video AI mỗi tháng',
-    features: [
-      {
-        name: 'Comprehensive TikTok Growth',
-        desc: 'Duy trì tần suất 1-2 video/ngày chất lượng cao nhờ AI.',
-      },
-      {
-        name: 'SEO & Creative Content',
-        desc: 'Tối ưu hóa tìm kiếm bằng Video chuẩn SEO đa nền tảng.',
-      },
-    ],
-    highlight: false,
-  },
+const serviceGroups = [
+    {
+        id: 'ai-video-solutions',
+        title: 'Nhóm 1: AI Video Marketing Solutions (Dịch vụ Mũi nhọn)',
+        services: [
+            {
+                icon: <MonitorPlay className="w-8 h-8 mb-6 text-[#289a6b]/70" />,
+                id: '01',
+                title: 'Sản xuất Video AI trọn gói',
+                subtitle: 'Tạo video quảng cáo, video giới thiệu sản phẩm chất lượng Cinematic chỉ trong 24-48h.',
+            },
+            {
+                icon: <Sparkles className="w-8 h-8 mb-6 text-[#289a6b]/70" />,
+                id: '02',
+                title: 'AI Video Fix & Optimization (Điểm chạm độc quyền)',
+                subtitle: 'Bạn có video gốc bị lỗi voice, sai màu, hoặc cần thay đổi thông tin sản phẩm? Thay vì quay lại tốn kém, VDC sử dụng AI để can thiệp trực tiếp vào file gốc, chỉnh sửa gương mặt, giọng nói và bối cảnh một cách hoàn hảo. Tiết kiệm 70% chi phí và 90% thời gian so với sản xuất truyền thống.',
+            },
+        ],
+    },
+    {
+        id: 'performance-growth',
+        title: 'Nhóm 2: Performance & Growth (Thực thi & Tăng trưởng)',
+        services: [
+            {
+                icon: <TrendingUp className="w-8 h-8 mb-6 text-[#289a6b]/70" />,
+                id: '03',
+                title: 'Ads Management (FB, TikTok, Google)',
+                subtitle: 'Kết hợp với kho nội dung video AI khổng lồ để chạy A/B Testing liên tục, tìm ra mẫu quảng cáo hiệu quả nhất với chi phí rẻ nhất.',
+            },
+            {
+                icon: <ArrowRight className="w-8 h-8 mb-6 text-[#289a6b]/70" />,
+                id: '04',
+                title: 'Omnichannel Strategy',
+                subtitle: 'Xây dựng phễu bán hàng đa kênh, lấy Video AI làm nội dung dẫn dắt hành vi khách hàng.',
+            },
+        ],
+    },
+    {
+        id: 'brand-content',
+        title: 'Nhóm 3: Brand & Content (Thương hiệu & Nội dung)',
+        services: [
+            {
+                icon: <Facebook className="w-8 h-8 mb-6 text-[#289a6b]/70" />,
+                id: '05',
+                title: 'Social Media Care',
+                subtitle: 'Quản trị kênh Social (TikTok, Reels) bằng nội dung video ngắn sản xuất hàng loạt bằng AI.',
+            },
+            {
+                icon: <MonitorPlay className="w-8 h-8 mb-6 text-[#289a6b]/70" />,
+                id: '06',
+                title: 'SEO & Creative Content',
+                subtitle: 'Tối ưu hóa tìm kiếm không chỉ bằng chữ viết mà bằng cả Video AI chuẩn SEO.',
+            },
+        ],
+    },
 ];
 
 export default function App() {
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
+    const carouselRef = useRef<HTMLDivElement>(null);
+
+  const handlePlayVideo = (videoId: string) => {
+    setPlayingVideo(videoId);
+  };
 
   const scroll = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
@@ -140,14 +126,14 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#0a0a0a] text-white min-h-screen font-sans selection:bg-white selection:text-black">
+    <div className="bg-[#0a0a0a] text-white min-h-screen font-sans selection:bg-[#289a6b] selection:text-white">
       {/* --- FIXED LEFT SIDEBAR (LIÊN HỆ) --- */}
-      <aside className="fixed left-0 top-0 h-full w-16 md:w-24 border-r border-white/10 flex flex-col justify-between items-center py-10 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
+      <aside className="fixed left-0 top-0 h-full w-16 md:w-24 border-r border-[#289a6b]/20 flex flex-col justify-between items-center py-10 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
         <div className="flex flex-col gap-6">
-          <a href="#" className="hover:text-gray-400 transition-colors">
+          <a href="#" className="hover:text-[#289a6b] transition-colors">
             <Instagram className="w-5 h-5" />
           </a>
-          <a href="#" className="hover:text-gray-400 transition-colors">
+          <a href="#" className="hover:text-[#289a6b] transition-colors">
             <Facebook className="w-5 h-5" />
           </a>
         </div>
@@ -158,15 +144,15 @@ export default function App() {
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
             <span className="flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-white/30 inline-block"></span>
-              Booking & Contact
-              <span className="w-8 h-[1px] bg-white/30 inline-block"></span>
+              <span className="w-8 h-[1px] bg-[#289a6b]/30 inline-block"></span>
+              Liên hệ
+              <span className="w-8 h-[1px] bg-[#289a6b]/30 inline-block"></span>
             </span>
           </div>
         </div>
 
         <div className="flex flex-col gap-6">
-          <button className="p-3 bg-white/10 rounded-full hover:bg-white hover:text-black transition-all">
+          <button className="p-3 bg-[#289a6b]/10 rounded-full hover:bg-[#289a6b] hover:text-white transition-all">
             <Phone className="w-4 h-4" />
           </button>
         </div>
@@ -180,15 +166,9 @@ export default function App() {
             VDC <span className="text-xs font-normal tracking-[0.2em] text-gray-400 mt-1 hidden sm:inline">| AI Hub</span>
           </div>
           <nav className="hidden md:flex gap-8 text-xs uppercase tracking-widest font-medium">
-            <a href="#services" className="hover:text-gray-400 transition-colors">
-              Services
-            </a>
-            <a href="#portfolio" className="hover:text-gray-400 transition-colors">
-              Portfolio
-            </a>
-            <a href="#workflow" className="hover:text-gray-400 transition-colors">
-              Workflow
-            </a>
+            <a href="#ai-video-solutions" className="hover:text-[#289a6b] transition-colors">AI Video</a>
+            <a href="#performance-growth" className="hover:text-[#289a6b] transition-colors">Tăng trưởng</a>
+            <a href="#brand-content" className="hover:text-[#289a6b] transition-colors">Thương hiệu</a>
           </nav>
           <button className="md:hidden">
             <div className="w-6 h-[2px] bg-white mb-1.5"></div>
@@ -200,37 +180,34 @@ export default function App() {
         {/* HERO SECTION */}
         <section className="min-h-screen flex flex-col justify-center px-8 md:px-16 pt-24 pb-12 relative overflow-hidden">
           {/* Decorative background element */}
-          <div className="absolute top-1/4 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -z-10"></div>
+          <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#289a6b]/10 rounded-full blur-3xl -z-10"></div>
 
           <div className="max-w-5xl">
-            <h2 className="text-sm md:text-base uppercase tracking-[0.3em] text-gray-400 mb-6 flex items-center gap-4">
-              <span className="w-12 h-[1px] bg-gray-400"></span>
-              Digital Marketing Tăng cường bởi AI
+            <h2 className="text-sm md:text-base uppercase tracking-[0.3em] text-[#289a6b] mb-6 flex items-center gap-4">
+              <span className="w-12 h-[1px] bg-[#289a6b]"></span>
+              Giải pháp Marketing ứng dụng AI
             </h2>
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.9] mb-10">
-              Kỷ Nguyên <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-400 to-white/20">
-                Sáng Tạo Mới.
+              Tối ưu <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#289a6b] via-[#5ee0aa] to-[#289a6b]/20">
+                Hiệu suất
               </span>
             </h1>
             <p className="text-lg md:text-2xl text-gray-300 font-light max-w-2xl mb-12 leading-relaxed">
-              Tạo sự khác biệt hoàn toàn so với Agency truyền thống. Tiết kiệm{' '}
-              <span className="text-white font-medium">70% chi phí</span> và{' '}
-              <span className="text-white font-medium">90% thời gian</span> với
-              công nghệ AI.
+             VDC cung cấp các giải pháp video ứng dụng AI, giúp doanh nghiệp tiết kiệm 70% chi phí và 90% thời gian so với phương pháp truyền thống.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6">
               <a
                 href="#portfolio"
-                className="group flex items-center justify-between px-8 py-5 bg-white text-black text-sm uppercase tracking-widest font-bold hover:bg-gray-200 transition-all w-fit"
+                className="group flex items-center justify-between px-8 py-5 bg-[#289a6b] text-white text-sm uppercase tracking-widest font-bold hover:bg-[#34c78c] transition-all w-fit"
               >
-                Nhận mẫu Video AI
+                Xem sản phẩm Video AI
                 <ArrowRight className="w-5 h-5 ml-6 group-hover:translate-x-2 transition-transform" />
               </a>
               <a
                 href="#services"
-                className="group flex items-center justify-between px-8 py-5 border border-white/20 text-white text-sm uppercase tracking-widest font-bold hover:bg-white/10 transition-all w-fit"
+                className="group flex items-center justify-between px-8 py-5 border border-[#289a6b]/30 text-white text-sm uppercase tracking-widest font-bold hover:bg-[#289a6b]/20 transition-all w-fit"
               >
                 Khám phá Dịch vụ
               </a>
@@ -242,12 +219,38 @@ export default function App() {
           </div>
         </section>
 
-        {/* AI VIDEO CAROUSEL SECTION */}
-        <section id="portfolio" className="py-24 border-t border-white/10 relative">
+        {/* SERVICES SECTION */}
+        <section id="services" className="py-24 px-8 md:px-16 bg-[#050505]">
+            <div className="max-w-7xl mx-auto">
+                {serviceGroups.map((group, groupIndex) => (
+                    <div key={groupIndex} id={group.id} className="mb-20 scroll-mt-24">
+                        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-12 text-[#289a6b]">{group.title}</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#289a6b]/20">
+                            {group.services.map((service) => (
+                                <div key={service.id} className="bg-[#050505] p-10 md:p-16 group relative overflow-hidden transition-all duration-500 hover:bg-[#111]">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-[#289a6b]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                                    <div className="relative z-10">
+                                        <div className="flex justify-between items-start mb-12">
+                                            {service.icon}
+                                            <span className="text-4xl font-black text-white/10">{service.id}</span>
+                                        </div>
+                                        <h3 className="text-2xl font-bold uppercase tracking-tight mb-3">{service.title}</h3>
+                                        <p className="text-gray-400 font-light text-sm leading-relaxed">{service.subtitle}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        {/* VIDEO PRODUCT SECTION */}
+        <section id="portfolio" className="py-24 border-t border-[#289a6b]/20 relative">
           <div className="px-8 md:px-16 mb-12 flex justify-between items-end">
             <div>
               <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4">
-                Showcase
+                Sản phẩm Video
               </h2>
               <p className="text-gray-400 text-sm tracking-widest uppercase">
                 Sản xuất bởi VDC AI Hub
@@ -256,13 +259,13 @@ export default function App() {
             <div className="hidden md:flex gap-4">
               <button
                 onClick={() => scroll('left')}
-                className="p-4 border border-white/20 hover:bg-white hover:text-black transition-all rounded-full"
+                className="p-4 border border-[#289a6b]/30 hover:bg-[#289a6b] hover:text-white transition-all rounded-full"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
               <button
                 onClick={() => scroll('right')}
-                className="p-4 border border-white/20 hover:bg-white hover:text-black transition-all rounded-full"
+                className="p-4 border border-[#289a6b]/30 hover:bg-[#289a6b] hover:text-white transition-all rounded-full"
               >
                 <ChevronRight className="w-6 h-6" />
               </button>
@@ -280,10 +283,10 @@ export default function App() {
                 className="min-w-[85vw] md:min-w-[60vw] lg:min-w-[45vw] snap-center flex flex-col group"
               >
                 <div
-                  className={`w-full ${video.aspectRatio} relative bg-[#111] border border-white/10 overflow-hidden mb-6 group-hover:border-white/30 transition-colors`}
+                  className={`w-full ${video.aspectRatio} relative bg-[#111] border border-[#289a6b]/20 overflow-hidden mb-6 group-hover:border-[#289a6b]/40 transition-colors`}
                 >
                   <iframe
-                    src={video.videoUrl}
+                    src={`${video.videoUrl}${playingVideo === video.id ? '&autoplay=1' : ''}`}
                     className="absolute top-0 left-0 w-full h-full"
                     frameBorder="0"
                     allow="autoplay; fullscreen; picture-in-picture"
@@ -299,7 +302,7 @@ export default function App() {
                       {video.title}
                     </h3>
                   </div>
-                  <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                  <button onClick={() => handlePlayVideo(video.id)} className="w-12 h-12 rounded-full border border-[#289a6b]/30 flex items-center justify-center group-hover:bg-[#289a6b] group-hover:text-white transition-all">
                     <Play className="w-4 h-4 ml-1" />
                   </button>
                 </div>
@@ -308,204 +311,44 @@ export default function App() {
           </div>
         </section>
 
-        {/* SERVICES ARCHITECTURE */}
-        <section id="services" className="py-24 px-8 md:px-16 bg-[#050505]">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-20">
-              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-6">
-                Service <br /> Architecture
-              </h2>
-              <p className="text-xl text-gray-400 font-light max-w-2xl">
-                Hệ sinh thái dịch vụ nhóm theo tư duy hoàn toàn mới, lấy AI
-                Video làm lõi để thúc đẩy tăng trưởng và chuyển đổi.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
-              {services.map((service) => (
-                <div
-                  key={service.id}
-                  className={`bg-[#050505] p-10 md:p-16 group relative overflow-hidden transition-all duration-500 hover:bg-[#111] ${
-                    service.highlight ? 'border border-white/20' : ''
-                  }`}
-                >
-                  {/* Hover effect gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-                  <div className="relative z-10">
-                    <div className="flex justify-between items-start mb-12">
-                      {service.icon}
-                      <span className="text-4xl font-black text-white/10">
-                        {service.id}
-                      </span>
-                    </div>
-
-                    <h3 className="text-3xl font-bold uppercase tracking-tight mb-3">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm uppercase tracking-widest text-gray-400 mb-10 pb-10 border-b border-white/10">
-                      {service.subtitle}
-                    </p>
-
-                    <ul className="space-y-6">
-                      {service.features.map((feature, fIndex) => (
-                        <li key={fIndex} className="flex flex-col gap-1">
-                          <h4 className="font-bold text-lg text-white flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-                            {feature.name}
-                          </h4>
-                          <p className="text-gray-400 font-light text-sm pl-3.5 leading-relaxed">
-                            {feature.desc}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {service.highlight && (
-                      <div className="mt-12">
-                        <a
-                          href="#"
-                          className="inline-flex items-center gap-4 text-sm uppercase tracking-widest font-bold border-b border-white pb-2 hover:text-gray-400 hover:border-gray-400 transition-colors"
-                        >
-                          Gửi video gốc tối ưu AI{' '}
-                          <ArrowRight className="w-4 h-4" />
-                        </a>
-                      </div>
-                    )}
-                  </div>
+        {/* ADDITIONAL SERVICES */}
+        <section id="additional-services" className="py-24 px-8 md:px-16 bg-[#050505] border-t border-[#289a6b]/20">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-[#111] p-10 md:p-16 border border-[#289a6b]/20">
+                    <h3 className="text-2xl font-bold uppercase tracking-tight mb-3">Digital Marketing</h3>
+                    <p className="text-[#289a6b] text-sm uppercase tracking-widest mb-6">AI-Driven Digital Marketing</p>
+                    <p className="text-gray-400 font-light">Chiến lược tăng trưởng dựa trên dữ liệu và công nghệ AI.</p>
                 </div>
-              ))}
+                <div className="bg-[#111] p-10 md:p-16 border border-[#289a6b]/20">
+                    <h3 className="text-2xl font-bold uppercase tracking-tight mb-3">Content Creation</h3>
+                    <p className="text-[#289a6b] text-sm uppercase tracking-widest mb-6">Massive Video Content</p>
+                    <p className="text-gray-400 font-light">Phủ sóng thương hiệu với hàng trăm Video AI mỗi tháng.</p>
+                </div>
             </div>
-          </div>
         </section>
 
-        {/* WORKFLOW & WHY US */}
-        <section
-          id="workflow"
-          className="py-24 px-8 md:px-16 border-t border-white/10"
-        >
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
-            {/* Why Choose VDC */}
-            <div>
-              <h2 className="text-3xl font-black uppercase tracking-tight mb-12">
-                Tại sao chọn VDC?
-              </h2>
-              <div className="space-y-8">
-                <div className="flex gap-6 items-start">
-                  <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center shrink-0">
-                    <span className="font-bold text-lg">1</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold uppercase tracking-wide mb-2">
-                      Tốc độ siêu việt
-                    </h3>
-                    <p className="text-gray-400 font-light">
-                      Sản xuất Video trong vài giờ, không phải vài tuần. Tiết
-                      kiệm 90% thời gian chờ đợi.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-6 items-start">
-                  <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center shrink-0">
-                    <span className="font-bold text-lg">2</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold uppercase tracking-wide mb-2">
-                      Linh hoạt tuyệt đối
-                    </h3>
-                    <p className="text-gray-400 font-light">
-                      Sửa lỗi nội dung, thay đổi ngôn ngữ (Dubbing AI) trên video
-                      gốc mà không cần setup quay lại tốn kém.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-6 items-start">
-                  <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center shrink-0">
-                    <span className="font-bold text-lg">3</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold uppercase tracking-wide mb-2">
-                      Tối ưu chi phí
-                    </h3>
-                    <p className="text-gray-400 font-light">
-                      Chi phí chỉ bằng 1/3 so với các Production House truyền
-                      thống nhờ quy trình AI hóa 80%.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* The VDC Workflow */}
-            <div className="bg-[#111] p-10 md:p-16 border border-white/10">
-              <h2 className="text-3xl font-black uppercase tracking-tight mb-12">
-                The VDC Workflow
-              </h2>
-
-              <div className="relative border-l border-white/20 ml-6 space-y-12">
-                <div className="relative pl-10">
-                  <div className="absolute w-4 h-4 bg-white rounded-full -left-[8.5px] top-1"></div>
-                  <h3 className="text-xs text-gray-400 uppercase tracking-widest mb-2">
-                    Bước 01
-                  </h3>
-                  <h4 className="text-2xl font-bold uppercase mb-2">Input</h4>
-                  <p className="text-gray-400 font-light">
-                    Khách hàng gửi ý tưởng, kịch bản hoặc video cũ/lỗi cần tối
-                    ưu.
-                  </p>
-                </div>
-
-                <div className="relative pl-10">
-                  <div className="absolute w-4 h-4 bg-black border-2 border-white rounded-full -left-[8.5px] top-1"></div>
-                  <h3 className="text-xs text-gray-400 uppercase tracking-widest mb-2">
-                    Bước 02
-                  </h3>
-                  <h4 className="text-2xl font-bold uppercase mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">
-                    AI Processing
-                  </h4>
-                  <p className="text-gray-400 font-light">
-                    Hệ thống AI xử lý: sửa lỗi, tạo voice-over chuẩn, làm đẹp
-                    hình ảnh, chèn sub, tối ưu kịch bản chuyển đổi.
-                  </p>
-                </div>
-
-                <div className="relative pl-10">
-                  <div className="absolute w-4 h-4 bg-white rounded-full -left-[8.5px] top-1"></div>
-                  <h3 className="text-xs text-gray-400 uppercase tracking-widest mb-2">
-                    Bước 03
-                  </h3>
-                  <h4 className="text-2xl font-bold uppercase mb-2">Output</h4>
-                  <p className="text-gray-400 font-light">
-                    Nhận Video chất lượng cao, chuẩn form SEO/TikTok, chi phí
-                    giảm 60%.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* FOOTER / CTA */}
-        <footer className="py-32 px-8 md:px-16 bg-white text-black text-center flex flex-col items-center justify-center">
+        <footer className="py-32 px-8 md:px-16 bg-[#289a6b]/10 text-white text-center flex flex-col items-center justify-center border-t border-[#289a6b]/20">
           <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 max-w-4xl">
-            Sẵn sàng chuyển đổi cùng VDC AI Hub?
+            Bắt đầu tối ưu hóa với VDC AI Hub
           </h2>
-          <p className="text-xl md:text-2xl font-light mb-12 max-w-2xl text-gray-600">
-            Bạn lỡ quay video nhưng không ưng ý? Đừng tốn tiền quay lại.
+          <p className="text-xl md:text-2xl font-light mb-12 max-w-2xl text-gray-400">
+            Video của bạn chưa đạt hiệu quả mong muốn? Hãy để chúng tôi cải thiện.
           </p>
-          <button className="group flex items-center justify-between px-10 py-6 bg-black text-white text-base md:text-lg uppercase tracking-widest font-bold hover:bg-gray-900 transition-all">
-            Gửi video gốc để tối ưu AI
+          <button className="group flex items-center justify-between px-10 py-6 bg-[#289a6b] text-white text-base md:text-lg uppercase tracking-widest font-bold hover:bg-[#34c78c] transition-all">
+            Gửi video để nhận tư vấn
             <ArrowRight className="w-6 h-6 ml-8 group-hover:translate-x-2 transition-transform" />
           </button>
 
-          <div className="mt-24 pt-8 border-t border-black/10 w-full flex flex-col md:flex-row justify-between items-center text-sm font-bold uppercase tracking-widest text-gray-500">
+          <div className="mt-24 pt-8 border-t border-[#289a6b]/20 w-full flex flex-col md:flex-row justify-between items-center text-sm font-bold uppercase tracking-widest text-gray-400">
             <p>© 2026 VDC AI HUB. ALL RIGHTS RESERVED.</p>
             <div className="flex gap-8 mt-4 md:mt-0">
-              <a href="#" className="hover:text-black transition-colors">
-                Privacy
+              <a href="#" className="hover:text-white transition-colors">
+                Chính sách
               </a>
-              <a href="#" className="hover:text-black transition-colors">
-                Terms
+              <a href="#" className="hover:text-white transition-colors">
+                Điều khoản
               </a>
             </div>
           </div>
